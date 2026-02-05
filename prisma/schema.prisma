@@ -1,0 +1,122 @@
+generator client {
+  provider = "prisma-client-js"
+  output    = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// --- Catálogo de Cafés ---
+
+model Product {
+  id          String    @id @default(uuid())
+  name        String    @unique
+  slug        String    @unique
+  description String    @db.Text
+  origin      String
+  region      String?
+  roastLevel  Roast     @default(MEDIUM)
+  process     Process   @default(WASHED)
+  imageUrl    String?
+
+  subscriptions Subscription[]
+  variants      Variant[]
+  cartItems     CartItem[]
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+model Variant {
+  id        String   @id @default(uuid())
+  weight    Int      // Peso en gramos: 250, 500, 1000
+  price     Decimal  @db.Decimal(10, 2)
+  stock     Int      @default(0)
+  
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  productId String
+  cartItems CartItem[]
+  subscriptions Subscription[]
+}
+
+// --- Planes de Suscripción ---
+
+model Subscription {
+  id        String   @id @default(uuid())
+  plan      Plan   
+  active    Boolean  @default(true)
+  
+  // Relación con el Usuario (quién paga)
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  
+  // Relación con el Producto (qué café recibe)
+  productId String
+  product   Product  @relation(fields: [productId], references: [id])
+
+  // Relación con la Variante (qué tamaño/formato eligió)
+  variantId String
+  variant   Variant  @relation(fields: [variantId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("subscriptions")
+}
+
+// --- Usuarios ---
+
+model User {
+  id        String     @id @default(uuid())
+  email     String     @unique
+  password  String     // Aquí guardaremos la contraseña CIFRADA
+  name      String?
+  cartItems CartItem[]
+  subscriptions Subscription[]
+  createdAt DateTime   @default(now())
+
+  @@map("users")
+}
+
+// --- Carrito de Compras ---
+
+model CartItem {
+  id        String   @id @default(uuid())
+  quantity  Int      @default(1)
+  
+  // Relaciones
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  
+  productId String
+  product   Product  @relation(fields: [productId], references: [id])
+
+  variantId String
+  variant   Variant  @relation(fields: [variantId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("cart_items")
+}
+
+// --- Enums ---
+
+enum Roast {
+  LIGHT
+  MEDIUM
+  DARK
+}
+
+enum Process {
+  WASHED
+  NATURAL
+  HONEY
+  BARREL_AGED
+}
+
+enum Plan {
+  MENSUAL
+  TRIMESTRAL
+  SEMESTRAL
+}

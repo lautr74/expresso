@@ -23,19 +23,21 @@ model Product {
   subscriptions Subscription[]
   variants      Variant[]
   cartItems     CartItem[]
+  orderItems    OrderItem[] 
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
 }
 
 model Variant {
   id        String   @id @default(uuid())
-  weight    Int      // Peso en gramos: 250, 500, 1000
+  weight    Int      
   price     Decimal  @db.Decimal(10, 2)
   stock     Int      @default(0)
   
   product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
   productId String
   cartItems CartItem[]
+  orderItems OrderItem[]
   subscriptions Subscription[]
 }
 
@@ -73,6 +75,8 @@ model User {
   name      String?
   cartItems CartItem[]
   subscriptions Subscription[]
+  adressess Address[]
+  orders    Order[]
   createdAt DateTime   @default(now())
 
   @@map("users")
@@ -97,7 +101,70 @@ model CartItem {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
+  @@unique([userId, variantId])
   @@map("cart_items")
+}
+
+// --- Direcciones --- //
+
+model Address {
+  id           String   @id @default(uuid())
+  title        String   @default("Mi Casa") // Ej: Casa, Oficina...
+  street       String
+  city         String
+  state        String   // Provincia/Estado
+  zipCode      String
+  country      String   @default("España")
+  isDefault    Boolean  @default(false)
+  orders       Order[]
+  
+  userId       String
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@map("addresses")
+}
+
+// --- Orders --- //
+
+model Order {
+  id              String      @id @default(uuid())
+  orderNumber     Int         @unique @default(autoincrement())
+  status          OrderStatus @default(PENDING)
+  totalAmount     Decimal     @db.Decimal(10, 2)
+  
+  // Relaciones
+  userId          String
+  user            User        @relation(fields: [userId], references: [id])
+  
+  addressId       String
+  address         Address     @relation(fields: [addressId], references: [id])
+  
+  items           OrderItem[]
+  
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+
+  @@map("orders")
+}
+
+model OrderItem {
+  id        String   @id @default(uuid())
+  quantity  Int
+  price     Decimal  @db.Decimal(10, 2) 
+  
+  orderId   String
+  order     Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  
+  productId String
+  product   Product  @relation(fields: [productId], references: [id])
+  
+  variantId String
+  variant   Variant  @relation(fields: [variantId], references: [id])
+
+  @@map("order_items")
 }
 
 // --- Enums ---
@@ -119,4 +186,12 @@ enum Plan {
   MENSUAL
   TRIMESTRAL
   SEMESTRAL
+}
+
+enum OrderStatus {
+  PENDING
+  PAID
+  SHIPPED
+  DELIVERED
+  CANCELLED
 }

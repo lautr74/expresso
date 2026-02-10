@@ -171,6 +171,40 @@ exports.Prisma.CartItemScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.AddressScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  street: 'street',
+  city: 'city',
+  state: 'state',
+  zipCode: 'zipCode',
+  country: 'country',
+  isDefault: 'isDefault',
+  userId: 'userId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.OrderScalarFieldEnum = {
+  id: 'id',
+  orderNumber: 'orderNumber',
+  status: 'status',
+  totalAmount: 'totalAmount',
+  userId: 'userId',
+  addressId: 'addressId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.OrderItemScalarFieldEnum = {
+  id: 'id',
+  quantity: 'quantity',
+  price: 'price',
+  orderId: 'orderId',
+  productId: 'productId',
+  variantId: 'variantId'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -204,12 +238,23 @@ exports.Plan = exports.$Enums.Plan = {
   SEMESTRAL: 'SEMESTRAL'
 };
 
+exports.OrderStatus = exports.$Enums.OrderStatus = {
+  PENDING: 'PENDING',
+  PAID: 'PAID',
+  SHIPPED: 'SHIPPED',
+  DELIVERED: 'DELIVERED',
+  CANCELLED: 'CANCELLED'
+};
+
 exports.Prisma.ModelName = {
   Product: 'Product',
   Variant: 'Variant',
   Subscription: 'Subscription',
   User: 'User',
-  CartItem: 'CartItem'
+  CartItem: 'CartItem',
+  Address: 'Address',
+  Order: 'Order',
+  OrderItem: 'OrderItem'
 };
 
 /**

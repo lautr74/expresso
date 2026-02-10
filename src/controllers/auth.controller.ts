@@ -6,8 +6,6 @@ import { prisma } from "../../lib/prisma.js";
 export const register = async (req: Request, res: Response) => {
   try {
     const { email, password, name } = req.body;
-
-    // 1. Validaciones básicas
     if (!email || !password) {
       return res
         .status(400)
@@ -53,7 +51,7 @@ export const register = async (req: Request, res: Response) => {
 export const login = async (req: Request, res: Response) => {
   try {
     const { email, password } = req.body;
-
+    console.log("Intentando login con:", email);
     // 1. Buscar al usuario por email
     const user = await prisma.user.findUnique({
       where: { email },

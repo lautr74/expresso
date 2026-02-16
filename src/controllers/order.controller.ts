@@ -1,13 +1,17 @@
 import { type Response } from "express";
 import { prisma } from "../../lib/prisma.js";
 import { type AuthRequest } from "../middlewares/auth.middleware.js";
+import Stripe from "stripe";
+import { OrderStatus } from "../../generated/prisma/index.js";
+
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string);
 
 export const createOrder = async (req: AuthRequest, res: Response) => {
   try {
     const { addressId } = req.body;
     const userId = req.user?.userId as string;
 
-    // 1. Obtener el carrito con los precios actuales de las variantes
+    // 1. Obtener el carrito
     const cartItems = await prisma.cartItem.findMany({
       where: { userId },
       include: { variant: true },
@@ -30,15 +34,16 @@ export const createOrder = async (req: AuthRequest, res: Response) => {
     const total = cartItems.reduce((acc, item) => {
       return acc + Number(item.variant.price) * item.quantity;
     }, 0);
+    const amountInCents = Math.round(total * 100);
 
-    // 3. TRANSACCIÓN: O se hace todo o no se hace nada
+    // 3. TRANSACCIÓN
     const order = await prisma.$transaction(async (tx) => {
       const newOrder = await tx.order.create({
         data: {
           userId,
           addressId,
           totalAmount: total,
-          status: "PAID",
+          status: OrderStatus.PENDING,
           items: {
             create: cartItems.map((item) => ({
               productId: item.productId,
@@ -50,26 +55,24 @@ export const createOrder = async (req: AuthRequest, res: Response) => {
         },
       });
 
-      await tx.cartItem.deleteMany({
-        where: { userId },
-      });
-
-      // Restar Stock de cada variante
-      for (const item of cartItems) {
-        await tx.variant.update({
-          where: { id: item.variantId },
-          data: {
-            stock: {
-              decrement: item.quantity,
-            },
-          },
-        });
-      }
-
       return newOrder;
     });
 
-    res.status(201).json({ message: "Pedido realizado con éxito", order });
+    // --- Cobrar con Stripe ---
+    const paymentIntent = await stripe.paymentIntents.create({
+      amount: amountInCents,
+      currency: "eur",
+      payment_method_types: ["card"],
+      metadata: {
+        orderId: order.id,
+        userId: userId,
+      },
+    });
+
+    res.status(201).json({
+      clientSecret: paymentIntent.client_secret,
+      orderId: order.id,
+    });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Error al procesar el pedido" });

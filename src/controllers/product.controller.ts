@@ -4,7 +4,6 @@ import { prisma } from "../../lib/prisma.js";
 export const getProducts = async (req: Request, res: Response) => {
   try {
     const { origin, sort } = req.query;
-    console.log("Filtro recibido:", origin);
 
     const whereClause = origin ? { origin: String(origin) } : {};
 

@@ -37,7 +37,7 @@ export const register = async (req: Request, res: Response) => {
         createdAt: true,
       },
     });
-
+    console.log("Usuario registrado:", user);
     return res.status(201).json({
       message: "Usuario registrado correctamente",
       user,

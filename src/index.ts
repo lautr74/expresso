@@ -21,7 +21,7 @@ app.use(
   }),
 );
 
-// Stripe Webhook (antes de middlewares para que no intente parsear el body)
+// Stripe Webhook
 app.post(
   "/api/webhooks/stripe",
   express.raw({ type: "application/json" }),

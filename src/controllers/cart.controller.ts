@@ -46,9 +46,13 @@ export const addToCart = async (req: AuthRequest, res: Response) => {
         variantId,
         quantity: quantity || 1,
       },
+      include: {
+        product: true,
+        variant: true,
+      }
     });
 
-    res.status(201).json({ message: "Carrito actualizado", cartItem });
+    res.status(201).json(cartItem);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Error al añadir al carrito" });
@@ -170,9 +174,14 @@ export const decreaseQuantity = async (req: AuthRequest, res: Response) => {
       data: {
         quantity: { decrement: 1 },
       },
+      include: {
+        product: true,
+        variant: true,
+      }
     });
 
-    res.json({ message: "Unidad restada", updatedItem });
+
+    res.json(updatedItem);
   } catch (error) {
     console.error("Error al restar cantidad:", error);
     res.status(500).json({ error: "Error interno del servidor" });

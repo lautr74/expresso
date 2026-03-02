@@ -8,6 +8,6 @@ const router = Router();
 router.use(authenticateToken);
 
 router.post("/", validate(createOrderSchema), createOrder);
-router.get("/orders", getMyOrders);
+router.get("/", getMyOrders);
 
 export default router;

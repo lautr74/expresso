@@ -71,7 +71,7 @@ model Subscription {
 model User {
   id        String     @id @default(uuid())
   email     String     @unique
-  password  String     // Aquí guardaremos la contraseña CIFRADA
+  password  String     
   name      String?
   cartItems CartItem[]
   subscriptions Subscription[]

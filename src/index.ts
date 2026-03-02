@@ -6,9 +6,9 @@ import authRoutes from "./routes/auth.routes.js";
 import cartRoutes from "./routes/cart.routes.js";
 import addressRoutes from "./routes/address.routes.js";
 import orderRoutes from "./routes/order.routes.js";
-import webhookRoutes from "./routes/webhook.routes.js";
 import userRoutes from "./routes/user.routes.js";
 import { handleStripeWebhook } from "./controllers/webhook.controller.js";
+import paymentRoutes from "./routes/payment.routes.js";
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -25,7 +25,9 @@ app.use(
 app.post(
   "/api/webhooks/stripe",
   express.raw({ type: "application/json" }),
-  handleStripeWebhook,
+  (req, res) => {
+    handleStripeWebhook(req, res);
+  }
 );
 
 // Middlewares
@@ -39,6 +41,7 @@ app.use("/api/cart", cartRoutes);
 app.use("/api/address", addressRoutes);
 app.use("/api/orders", orderRoutes);
 app.use("/api/user", userRoutes);
+app.use("/api/payment", paymentRoutes);
 
 app.listen(PORT, () => {
   console.log(`☕ Expresso API lista en: http://localhost:${PORT}`);

@@ -1,5 +1,5 @@
 import { prisma } from "../lib/prisma.js";
-import { Roast, Process, Plan } from "@prisma/client";
+import { Roast, Process } from "@prisma/client";
 
 async function main() {
   console.log("☕ Insertando catálogo de 20 variedades...");
@@ -256,15 +256,6 @@ async function main() {
   for (const coffee of coffeeData) {
     await prisma.product.create({ data: coffee });
   }
-
-  console.log("💳 Insertando planes de suscripción...");
-  await prisma.subscription.createMany({
-    data: [
-      { name: "Suscripción Básica", plan: Plan.MENSUAL, discount: 0.1 },
-      { name: "Suscripción Premium", plan: Plan.TRIMESTRAL, discount: 0.2 },
-      { name: "Suscripción Expertos", plan: Plan.SEMESTRAL, discount: 0.3 },
-    ],
-  });
 
   console.log("✨ ¡Base de datos poblada con éxito!");
 }

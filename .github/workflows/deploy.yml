@@ -37,4 +37,4 @@ jobs:
             npm run build
 
             # 5. Reiniciar con PM2 (Usa un nombre único para este proyecto)
-            pm2 restart "expresso" || pm2 start dist/index.js --name "expresso"
+            pm2 restart "expresso" || pm2 start dist/src/index.js --name "expresso"

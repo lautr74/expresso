@@ -69,14 +69,16 @@ model Subscription {
 // --- Usuarios ---
 
 model User {
-  id        String     @id @default(uuid())
-  email     String     @unique
-  password  String     
-  name      String?
-  cartItems CartItem[]
-  subscriptions Subscription[]
-  adressess Address[]
-  orders    Order[]
+  id               String     @id @default(uuid())
+  email            String     @unique
+  password         String     
+  name             String?
+  cartItems        CartItem[]
+  stripeCustomerId String?  @unique 
+  subscriptions    Subscription[]
+  plan             Plan?     
+  addresses        Address[]
+  orders           Order[]
   createdAt DateTime   @default(now())
 
   @@map("users")
@@ -185,7 +187,6 @@ enum Process {
 enum Plan {
   MENSUAL
   TRIMESTRAL
-  SEMESTRAL
 }
 
 enum OrderStatus {

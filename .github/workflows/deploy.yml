@@ -1,0 +1,36 @@
+name: Remote Deploy
+
+on:
+  push:
+    branches:
+      - main # Asegúrate de que tu rama principal se llame así
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout del código
+        uses: actions/checkout@v4
+
+      - name: Desplegar en EC2 vía SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            # 1. Entrar a la carpeta del proyecto
+            cd expresso
+
+            # 2. Bajar cambios
+            git pull origin main
+
+            # 3. Instalar dependencias (limpio)
+            npm install
+
+            # 4. Construir el proyecto (Si usas TS o Next.js)
+            npm run build
+
+            # 5. Reiniciar con PM2 (Usa un nombre único para este proyecto)
+            pm2 restart "expresso" || pm2 start dist/index.js --name "expresso"

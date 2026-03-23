@@ -79,8 +79,7 @@ export type Process = (typeof Process)[keyof typeof Process]
 
 export const Plan: {
   MENSUAL: 'MENSUAL',
-  TRIMESTRAL: 'TRIMESTRAL',
-  SEMESTRAL: 'SEMESTRAL'
+  TRIMESTRAL: 'TRIMESTRAL'
 };
 
 export type Plan = (typeof Plan)[keyof typeof Plan]
@@ -1668,14 +1667,14 @@ export namespace Prisma {
   export type UserCountOutputType = {
     cartItems: number
     subscriptions: number
-    adressess: number
+    addresses: number
     orders: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     cartItems?: boolean | UserCountOutputTypeCountCartItemsArgs
     subscriptions?: boolean | UserCountOutputTypeCountSubscriptionsArgs
-    adressess?: boolean | UserCountOutputTypeCountAdressessArgs
+    addresses?: boolean | UserCountOutputTypeCountAddressesArgs
     orders?: boolean | UserCountOutputTypeCountOrdersArgs
   }
 
@@ -1707,7 +1706,7 @@ export namespace Prisma {
   /**
    * UserCountOutputType without action
    */
-  export type UserCountOutputTypeCountAdressessArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UserCountOutputTypeCountAddressesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: AddressWhereInput
   }
 
@@ -5331,6 +5330,8 @@ export namespace Prisma {
     email: string | null
     password: string | null
     name: string | null
+    stripeCustomerId: string | null
+    plan: $Enums.Plan | null
     createdAt: Date | null
   }
 
@@ -5339,6 +5340,8 @@ export namespace Prisma {
     email: string | null
     password: string | null
     name: string | null
+    stripeCustomerId: string | null
+    plan: $Enums.Plan | null
     createdAt: Date | null
   }
 
@@ -5347,6 +5350,8 @@ export namespace Prisma {
     email: number
     password: number
     name: number
+    stripeCustomerId: number
+    plan: number
     createdAt: number
     _all: number
   }
@@ -5357,6 +5362,8 @@ export namespace Prisma {
     email?: true
     password?: true
     name?: true
+    stripeCustomerId?: true
+    plan?: true
     createdAt?: true
   }
 
@@ -5365,6 +5372,8 @@ export namespace Prisma {
     email?: true
     password?: true
     name?: true
+    stripeCustomerId?: true
+    plan?: true
     createdAt?: true
   }
 
@@ -5373,6 +5382,8 @@ export namespace Prisma {
     email?: true
     password?: true
     name?: true
+    stripeCustomerId?: true
+    plan?: true
     createdAt?: true
     _all?: true
   }
@@ -5454,6 +5465,8 @@ export namespace Prisma {
     email: string
     password: string
     name: string | null
+    stripeCustomerId: string | null
+    plan: $Enums.Plan | null
     createdAt: Date
     _count: UserCountAggregateOutputType | null
     _min: UserMinAggregateOutputType | null
@@ -5479,10 +5492,12 @@ export namespace Prisma {
     email?: boolean
     password?: boolean
     name?: boolean
+    stripeCustomerId?: boolean
+    plan?: boolean
     createdAt?: boolean
     cartItems?: boolean | User$cartItemsArgs<ExtArgs>
     subscriptions?: boolean | User$subscriptionsArgs<ExtArgs>
-    adressess?: boolean | User$adressessArgs<ExtArgs>
+    addresses?: boolean | User$addressesArgs<ExtArgs>
     orders?: boolean | User$ordersArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
@@ -5492,6 +5507,8 @@ export namespace Prisma {
     email?: boolean
     password?: boolean
     name?: boolean
+    stripeCustomerId?: boolean
+    plan?: boolean
     createdAt?: boolean
   }, ExtArgs["result"]["user"]>
 
@@ -5500,6 +5517,8 @@ export namespace Prisma {
     email?: boolean
     password?: boolean
     name?: boolean
+    stripeCustomerId?: boolean
+    plan?: boolean
     createdAt?: boolean
   }, ExtArgs["result"]["user"]>
 
@@ -5508,14 +5527,16 @@ export namespace Prisma {
     email?: boolean
     password?: boolean
     name?: boolean
+    stripeCustomerId?: boolean
+    plan?: boolean
     createdAt?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "password" | "name" | "createdAt", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "password" | "name" | "stripeCustomerId" | "plan" | "createdAt", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     cartItems?: boolean | User$cartItemsArgs<ExtArgs>
     subscriptions?: boolean | User$subscriptionsArgs<ExtArgs>
-    adressess?: boolean | User$adressessArgs<ExtArgs>
+    addresses?: boolean | User$addressesArgs<ExtArgs>
     orders?: boolean | User$ordersArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
@@ -5527,7 +5548,7 @@ export namespace Prisma {
     objects: {
       cartItems: Prisma.$CartItemPayload<ExtArgs>[]
       subscriptions: Prisma.$SubscriptionPayload<ExtArgs>[]
-      adressess: Prisma.$AddressPayload<ExtArgs>[]
+      addresses: Prisma.$AddressPayload<ExtArgs>[]
       orders: Prisma.$OrderPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
@@ -5535,6 +5556,8 @@ export namespace Prisma {
       email: string
       password: string
       name: string | null
+      stripeCustomerId: string | null
+      plan: $Enums.Plan | null
       createdAt: Date
     }, ExtArgs["result"]["user"]>
     composites: {}
@@ -5932,7 +5955,7 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     cartItems<T extends User$cartItemsArgs<ExtArgs> = {}>(args?: Subset<T, User$cartItemsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CartItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     subscriptions<T extends User$subscriptionsArgs<ExtArgs> = {}>(args?: Subset<T, User$subscriptionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SubscriptionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    adressess<T extends User$adressessArgs<ExtArgs> = {}>(args?: Subset<T, User$adressessArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AddressPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    addresses<T extends User$addressesArgs<ExtArgs> = {}>(args?: Subset<T, User$addressesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AddressPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     orders<T extends User$ordersArgs<ExtArgs> = {}>(args?: Subset<T, User$ordersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OrderPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -5967,6 +5990,8 @@ export namespace Prisma {
     readonly email: FieldRef<"User", 'String'>
     readonly password: FieldRef<"User", 'String'>
     readonly name: FieldRef<"User", 'String'>
+    readonly stripeCustomerId: FieldRef<"User", 'String'>
+    readonly plan: FieldRef<"User", 'Plan'>
     readonly createdAt: FieldRef<"User", 'DateTime'>
   }
     
@@ -6404,9 +6429,9 @@ export namespace Prisma {
   }
 
   /**
-   * User.adressess
+   * User.addresses
    */
-  export type User$adressessArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type User$addressesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the Address
      */
@@ -11129,6 +11154,8 @@ export namespace Prisma {
     email: 'email',
     password: 'password',
     name: 'name',
+    stripeCustomerId: 'stripeCustomerId',
+    plan: 'plan',
     createdAt: 'createdAt'
   };
 
@@ -11600,10 +11627,12 @@ export namespace Prisma {
     email?: StringFilter<"User"> | string
     password?: StringFilter<"User"> | string
     name?: StringNullableFilter<"User"> | string | null
+    stripeCustomerId?: StringNullableFilter<"User"> | string | null
+    plan?: EnumPlanNullableFilter<"User"> | $Enums.Plan | null
     createdAt?: DateTimeFilter<"User"> | Date | string
     cartItems?: CartItemListRelationFilter
     subscriptions?: SubscriptionListRelationFilter
-    adressess?: AddressListRelationFilter
+    addresses?: AddressListRelationFilter
     orders?: OrderListRelationFilter
   }
 
@@ -11612,33 +11641,39 @@ export namespace Prisma {
     email?: SortOrder
     password?: SortOrder
     name?: SortOrderInput | SortOrder
+    stripeCustomerId?: SortOrderInput | SortOrder
+    plan?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     cartItems?: CartItemOrderByRelationAggregateInput
     subscriptions?: SubscriptionOrderByRelationAggregateInput
-    adressess?: AddressOrderByRelationAggregateInput
+    addresses?: AddressOrderByRelationAggregateInput
     orders?: OrderOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
     id?: string
     email?: string
+    stripeCustomerId?: string
     AND?: UserWhereInput | UserWhereInput[]
     OR?: UserWhereInput[]
     NOT?: UserWhereInput | UserWhereInput[]
     password?: StringFilter<"User"> | string
     name?: StringNullableFilter<"User"> | string | null
+    plan?: EnumPlanNullableFilter<"User"> | $Enums.Plan | null
     createdAt?: DateTimeFilter<"User"> | Date | string
     cartItems?: CartItemListRelationFilter
     subscriptions?: SubscriptionListRelationFilter
-    adressess?: AddressListRelationFilter
+    addresses?: AddressListRelationFilter
     orders?: OrderListRelationFilter
-  }, "id" | "email">
+  }, "id" | "email" | "stripeCustomerId">
 
   export type UserOrderByWithAggregationInput = {
     id?: SortOrder
     email?: SortOrder
     password?: SortOrder
     name?: SortOrderInput | SortOrder
+    stripeCustomerId?: SortOrderInput | SortOrder
+    plan?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     _count?: UserCountOrderByAggregateInput
     _max?: UserMaxOrderByAggregateInput
@@ -11653,6 +11688,8 @@ export namespace Prisma {
     email?: StringWithAggregatesFilter<"User"> | string
     password?: StringWithAggregatesFilter<"User"> | string
     name?: StringNullableWithAggregatesFilter<"User"> | string | null
+    stripeCustomerId?: StringNullableWithAggregatesFilter<"User"> | string | null
+    plan?: EnumPlanNullableWithAggregatesFilter<"User"> | $Enums.Plan | null
     createdAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
   }
 
@@ -12224,10 +12261,12 @@ export namespace Prisma {
     email: string
     password: string
     name?: string | null
+    stripeCustomerId?: string | null
+    plan?: $Enums.Plan | null
     createdAt?: Date | string
     cartItems?: CartItemCreateNestedManyWithoutUserInput
     subscriptions?: SubscriptionCreateNestedManyWithoutUserInput
-    adressess?: AddressCreateNestedManyWithoutUserInput
+    addresses?: AddressCreateNestedManyWithoutUserInput
     orders?: OrderCreateNestedManyWithoutUserInput
   }
 
@@ -12236,10 +12275,12 @@ export namespace Prisma {
     email: string
     password: string
     name?: string | null
+    stripeCustomerId?: string | null
+    plan?: $Enums.Plan | null
     createdAt?: Date | string
     cartItems?: CartItemUncheckedCreateNestedManyWithoutUserInput
     subscriptions?: SubscriptionUncheckedCreateNestedManyWithoutUserInput
-    adressess?: AddressUncheckedCreateNestedManyWithoutUserInput
+    addresses?: AddressUncheckedCreateNestedManyWithoutUserInput
     orders?: OrderUncheckedCreateNestedManyWithoutUserInput
   }
 
@@ -12248,10 +12289,12 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
+    stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    plan?: NullableEnumPlanFieldUpdateOperationsInput | $Enums.Plan | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     cartItems?: CartItemUpdateManyWithoutUserNestedInput
     subscriptions?: SubscriptionUpdateManyWithoutUserNestedInput
-    adressess?: AddressUpdateManyWithoutUserNestedInput
+    addresses?: AddressUpdateManyWithoutUserNestedInput
     orders?: OrderUpdateManyWithoutUserNestedInput
   }
 
@@ -12260,10 +12303,12 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
+    stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    plan?: NullableEnumPlanFieldUpdateOperationsInput | $Enums.Plan | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     cartItems?: CartItemUncheckedUpdateManyWithoutUserNestedInput
     subscriptions?: SubscriptionUncheckedUpdateManyWithoutUserNestedInput
-    adressess?: AddressUncheckedUpdateManyWithoutUserNestedInput
+    addresses?: AddressUncheckedUpdateManyWithoutUserNestedInput
     orders?: OrderUncheckedUpdateManyWithoutUserNestedInput
   }
 
@@ -12272,6 +12317,8 @@ export namespace Prisma {
     email: string
     password: string
     name?: string | null
+    stripeCustomerId?: string | null
+    plan?: $Enums.Plan | null
     createdAt?: Date | string
   }
 
@@ -12280,6 +12327,8 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
+    stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    plan?: NullableEnumPlanFieldUpdateOperationsInput | $Enums.Plan | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -12288,6 +12337,8 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
+    stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    plan?: NullableEnumPlanFieldUpdateOperationsInput | $Enums.Plan | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -12370,7 +12421,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     orders?: OrderCreateNestedManyWithoutAddressInput
-    user: UserCreateNestedOneWithoutAdressessInput
+    user: UserCreateNestedOneWithoutAddressesInput
   }
 
   export type AddressUncheckedCreateInput = {
@@ -12400,7 +12451,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     orders?: OrderUpdateManyWithoutAddressNestedInput
-    user?: UserUpdateOneRequiredWithoutAdressessNestedInput
+    user?: UserUpdateOneRequiredWithoutAddressesNestedInput
   }
 
   export type AddressUncheckedUpdateInput = {
@@ -12976,6 +13027,13 @@ export namespace Prisma {
     _max?: NestedBoolFilter<$PrismaModel>
   }
 
+  export type EnumPlanNullableFilter<$PrismaModel = never> = {
+    equals?: $Enums.Plan | EnumPlanFieldRefInput<$PrismaModel> | null
+    in?: $Enums.Plan[] | ListEnumPlanFieldRefInput<$PrismaModel> | null
+    notIn?: $Enums.Plan[] | ListEnumPlanFieldRefInput<$PrismaModel> | null
+    not?: NestedEnumPlanNullableFilter<$PrismaModel> | $Enums.Plan | null
+  }
+
   export type AddressListRelationFilter = {
     every?: AddressWhereInput
     some?: AddressWhereInput
@@ -13001,6 +13059,8 @@ export namespace Prisma {
     email?: SortOrder
     password?: SortOrder
     name?: SortOrder
+    stripeCustomerId?: SortOrder
+    plan?: SortOrder
     createdAt?: SortOrder
   }
 
@@ -13009,6 +13069,8 @@ export namespace Prisma {
     email?: SortOrder
     password?: SortOrder
     name?: SortOrder
+    stripeCustomerId?: SortOrder
+    plan?: SortOrder
     createdAt?: SortOrder
   }
 
@@ -13017,7 +13079,19 @@ export namespace Prisma {
     email?: SortOrder
     password?: SortOrder
     name?: SortOrder
+    stripeCustomerId?: SortOrder
+    plan?: SortOrder
     createdAt?: SortOrder
+  }
+
+  export type EnumPlanNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.Plan | EnumPlanFieldRefInput<$PrismaModel> | null
+    in?: $Enums.Plan[] | ListEnumPlanFieldRefInput<$PrismaModel> | null
+    notIn?: $Enums.Plan[] | ListEnumPlanFieldRefInput<$PrismaModel> | null
+    not?: NestedEnumPlanNullableWithAggregatesFilter<$PrismaModel> | $Enums.Plan | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedEnumPlanNullableFilter<$PrismaModel>
+    _max?: NestedEnumPlanNullableFilter<$PrismaModel>
   }
 
   export type CartItemUserIdVariantIdCompoundUniqueInput = {
@@ -13662,6 +13736,10 @@ export namespace Prisma {
     connect?: OrderWhereUniqueInput | OrderWhereUniqueInput[]
   }
 
+  export type NullableEnumPlanFieldUpdateOperationsInput = {
+    set?: $Enums.Plan | null
+  }
+
   export type CartItemUpdateManyWithoutUserNestedInput = {
     create?: XOR<CartItemCreateWithoutUserInput, CartItemUncheckedCreateWithoutUserInput> | CartItemCreateWithoutUserInput[] | CartItemUncheckedCreateWithoutUserInput[]
     connectOrCreate?: CartItemCreateOrConnectWithoutUserInput | CartItemCreateOrConnectWithoutUserInput[]
@@ -13823,9 +13901,9 @@ export namespace Prisma {
     connect?: OrderWhereUniqueInput | OrderWhereUniqueInput[]
   }
 
-  export type UserCreateNestedOneWithoutAdressessInput = {
-    create?: XOR<UserCreateWithoutAdressessInput, UserUncheckedCreateWithoutAdressessInput>
-    connectOrCreate?: UserCreateOrConnectWithoutAdressessInput
+  export type UserCreateNestedOneWithoutAddressesInput = {
+    create?: XOR<UserCreateWithoutAddressesInput, UserUncheckedCreateWithoutAddressesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutAddressesInput
     connect?: UserWhereUniqueInput
   }
 
@@ -13850,12 +13928,12 @@ export namespace Prisma {
     deleteMany?: OrderScalarWhereInput | OrderScalarWhereInput[]
   }
 
-  export type UserUpdateOneRequiredWithoutAdressessNestedInput = {
-    create?: XOR<UserCreateWithoutAdressessInput, UserUncheckedCreateWithoutAdressessInput>
-    connectOrCreate?: UserCreateOrConnectWithoutAdressessInput
-    upsert?: UserUpsertWithoutAdressessInput
+  export type UserUpdateOneRequiredWithoutAddressesNestedInput = {
+    create?: XOR<UserCreateWithoutAddressesInput, UserUncheckedCreateWithoutAddressesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutAddressesInput
+    upsert?: UserUpsertWithoutAddressesInput
     connect?: UserWhereUniqueInput
-    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutAdressessInput, UserUpdateWithoutAdressessInput>, UserUncheckedUpdateWithoutAdressessInput>
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutAddressesInput, UserUpdateWithoutAddressesInput>, UserUncheckedUpdateWithoutAddressesInput>
   }
 
   export type OrderUncheckedUpdateManyWithoutAddressNestedInput = {
@@ -14213,6 +14291,23 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedBoolFilter<$PrismaModel>
     _max?: NestedBoolFilter<$PrismaModel>
+  }
+
+  export type NestedEnumPlanNullableFilter<$PrismaModel = never> = {
+    equals?: $Enums.Plan | EnumPlanFieldRefInput<$PrismaModel> | null
+    in?: $Enums.Plan[] | ListEnumPlanFieldRefInput<$PrismaModel> | null
+    notIn?: $Enums.Plan[] | ListEnumPlanFieldRefInput<$PrismaModel> | null
+    not?: NestedEnumPlanNullableFilter<$PrismaModel> | $Enums.Plan | null
+  }
+
+  export type NestedEnumPlanNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.Plan | EnumPlanFieldRefInput<$PrismaModel> | null
+    in?: $Enums.Plan[] | ListEnumPlanFieldRefInput<$PrismaModel> | null
+    notIn?: $Enums.Plan[] | ListEnumPlanFieldRefInput<$PrismaModel> | null
+    not?: NestedEnumPlanNullableWithAggregatesFilter<$PrismaModel> | $Enums.Plan | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedEnumPlanNullableFilter<$PrismaModel>
+    _max?: NestedEnumPlanNullableFilter<$PrismaModel>
   }
 
   export type NestedEnumOrderStatusFilter<$PrismaModel = never> = {
@@ -14681,9 +14776,11 @@ export namespace Prisma {
     email: string
     password: string
     name?: string | null
+    stripeCustomerId?: string | null
+    plan?: $Enums.Plan | null
     createdAt?: Date | string
     cartItems?: CartItemCreateNestedManyWithoutUserInput
-    adressess?: AddressCreateNestedManyWithoutUserInput
+    addresses?: AddressCreateNestedManyWithoutUserInput
     orders?: OrderCreateNestedManyWithoutUserInput
   }
 
@@ -14692,9 +14789,11 @@ export namespace Prisma {
     email: string
     password: string
     name?: string | null
+    stripeCustomerId?: string | null
+    plan?: $Enums.Plan | null
     createdAt?: Date | string
     cartItems?: CartItemUncheckedCreateNestedManyWithoutUserInput
-    adressess?: AddressUncheckedCreateNestedManyWithoutUserInput
+    addresses?: AddressUncheckedCreateNestedManyWithoutUserInput
     orders?: OrderUncheckedCreateNestedManyWithoutUserInput
   }
 
@@ -14783,9 +14882,11 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
+    stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    plan?: NullableEnumPlanFieldUpdateOperationsInput | $Enums.Plan | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     cartItems?: CartItemUpdateManyWithoutUserNestedInput
-    adressess?: AddressUpdateManyWithoutUserNestedInput
+    addresses?: AddressUpdateManyWithoutUserNestedInput
     orders?: OrderUpdateManyWithoutUserNestedInput
   }
 
@@ -14794,9 +14895,11 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
+    stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    plan?: NullableEnumPlanFieldUpdateOperationsInput | $Enums.Plan | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     cartItems?: CartItemUncheckedUpdateManyWithoutUserNestedInput
-    adressess?: AddressUncheckedUpdateManyWithoutUserNestedInput
+    addresses?: AddressUncheckedUpdateManyWithoutUserNestedInput
     orders?: OrderUncheckedUpdateManyWithoutUserNestedInput
   }
 
@@ -15104,9 +15207,11 @@ export namespace Prisma {
     email: string
     password: string
     name?: string | null
+    stripeCustomerId?: string | null
+    plan?: $Enums.Plan | null
     createdAt?: Date | string
     subscriptions?: SubscriptionCreateNestedManyWithoutUserInput
-    adressess?: AddressCreateNestedManyWithoutUserInput
+    addresses?: AddressCreateNestedManyWithoutUserInput
     orders?: OrderCreateNestedManyWithoutUserInput
   }
 
@@ -15115,9 +15220,11 @@ export namespace Prisma {
     email: string
     password: string
     name?: string | null
+    stripeCustomerId?: string | null
+    plan?: $Enums.Plan | null
     createdAt?: Date | string
     subscriptions?: SubscriptionUncheckedCreateNestedManyWithoutUserInput
-    adressess?: AddressUncheckedCreateNestedManyWithoutUserInput
+    addresses?: AddressUncheckedCreateNestedManyWithoutUserInput
     orders?: OrderUncheckedCreateNestedManyWithoutUserInput
   }
 
@@ -15206,9 +15313,11 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
+    stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    plan?: NullableEnumPlanFieldUpdateOperationsInput | $Enums.Plan | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     subscriptions?: SubscriptionUpdateManyWithoutUserNestedInput
-    adressess?: AddressUpdateManyWithoutUserNestedInput
+    addresses?: AddressUpdateManyWithoutUserNestedInput
     orders?: OrderUpdateManyWithoutUserNestedInput
   }
 
@@ -15217,9 +15326,11 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
+    stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    plan?: NullableEnumPlanFieldUpdateOperationsInput | $Enums.Plan | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     subscriptions?: SubscriptionUncheckedUpdateManyWithoutUserNestedInput
-    adressess?: AddressUncheckedUpdateManyWithoutUserNestedInput
+    addresses?: AddressUncheckedUpdateManyWithoutUserNestedInput
     orders?: OrderUncheckedUpdateManyWithoutUserNestedInput
   }
 
@@ -15331,31 +15442,35 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type UserCreateWithoutAdressessInput = {
+  export type UserCreateWithoutAddressesInput = {
     id?: string
     email: string
     password: string
     name?: string | null
+    stripeCustomerId?: string | null
+    plan?: $Enums.Plan | null
     createdAt?: Date | string
     cartItems?: CartItemCreateNestedManyWithoutUserInput
     subscriptions?: SubscriptionCreateNestedManyWithoutUserInput
     orders?: OrderCreateNestedManyWithoutUserInput
   }
 
-  export type UserUncheckedCreateWithoutAdressessInput = {
+  export type UserUncheckedCreateWithoutAddressesInput = {
     id?: string
     email: string
     password: string
     name?: string | null
+    stripeCustomerId?: string | null
+    plan?: $Enums.Plan | null
     createdAt?: Date | string
     cartItems?: CartItemUncheckedCreateNestedManyWithoutUserInput
     subscriptions?: SubscriptionUncheckedCreateNestedManyWithoutUserInput
     orders?: OrderUncheckedCreateNestedManyWithoutUserInput
   }
 
-  export type UserCreateOrConnectWithoutAdressessInput = {
+  export type UserCreateOrConnectWithoutAddressesInput = {
     where: UserWhereUniqueInput
-    create: XOR<UserCreateWithoutAdressessInput, UserUncheckedCreateWithoutAdressessInput>
+    create: XOR<UserCreateWithoutAddressesInput, UserUncheckedCreateWithoutAddressesInput>
   }
 
   export type OrderUpsertWithWhereUniqueWithoutAddressInput = {
@@ -15374,33 +15489,37 @@ export namespace Prisma {
     data: XOR<OrderUpdateManyMutationInput, OrderUncheckedUpdateManyWithoutAddressInput>
   }
 
-  export type UserUpsertWithoutAdressessInput = {
-    update: XOR<UserUpdateWithoutAdressessInput, UserUncheckedUpdateWithoutAdressessInput>
-    create: XOR<UserCreateWithoutAdressessInput, UserUncheckedCreateWithoutAdressessInput>
+  export type UserUpsertWithoutAddressesInput = {
+    update: XOR<UserUpdateWithoutAddressesInput, UserUncheckedUpdateWithoutAddressesInput>
+    create: XOR<UserCreateWithoutAddressesInput, UserUncheckedCreateWithoutAddressesInput>
     where?: UserWhereInput
   }
 
-  export type UserUpdateToOneWithWhereWithoutAdressessInput = {
+  export type UserUpdateToOneWithWhereWithoutAddressesInput = {
     where?: UserWhereInput
-    data: XOR<UserUpdateWithoutAdressessInput, UserUncheckedUpdateWithoutAdressessInput>
+    data: XOR<UserUpdateWithoutAddressesInput, UserUncheckedUpdateWithoutAddressesInput>
   }
 
-  export type UserUpdateWithoutAdressessInput = {
+  export type UserUpdateWithoutAddressesInput = {
     id?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
+    stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    plan?: NullableEnumPlanFieldUpdateOperationsInput | $Enums.Plan | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     cartItems?: CartItemUpdateManyWithoutUserNestedInput
     subscriptions?: SubscriptionUpdateManyWithoutUserNestedInput
     orders?: OrderUpdateManyWithoutUserNestedInput
   }
 
-  export type UserUncheckedUpdateWithoutAdressessInput = {
+  export type UserUncheckedUpdateWithoutAddressesInput = {
     id?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
+    stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    plan?: NullableEnumPlanFieldUpdateOperationsInput | $Enums.Plan | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     cartItems?: CartItemUncheckedUpdateManyWithoutUserNestedInput
     subscriptions?: SubscriptionUncheckedUpdateManyWithoutUserNestedInput
@@ -15412,10 +15531,12 @@ export namespace Prisma {
     email: string
     password: string
     name?: string | null
+    stripeCustomerId?: string | null
+    plan?: $Enums.Plan | null
     createdAt?: Date | string
     cartItems?: CartItemCreateNestedManyWithoutUserInput
     subscriptions?: SubscriptionCreateNestedManyWithoutUserInput
-    adressess?: AddressCreateNestedManyWithoutUserInput
+    addresses?: AddressCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutOrdersInput = {
@@ -15423,10 +15544,12 @@ export namespace Prisma {
     email: string
     password: string
     name?: string | null
+    stripeCustomerId?: string | null
+    plan?: $Enums.Plan | null
     createdAt?: Date | string
     cartItems?: CartItemUncheckedCreateNestedManyWithoutUserInput
     subscriptions?: SubscriptionUncheckedCreateNestedManyWithoutUserInput
-    adressess?: AddressUncheckedCreateNestedManyWithoutUserInput
+    addresses?: AddressUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutOrdersInput = {
@@ -15445,7 +15568,7 @@ export namespace Prisma {
     isDefault?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
-    user: UserCreateNestedOneWithoutAdressessInput
+    user: UserCreateNestedOneWithoutAddressesInput
   }
 
   export type AddressUncheckedCreateWithoutOrdersInput = {
@@ -15509,10 +15632,12 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
+    stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    plan?: NullableEnumPlanFieldUpdateOperationsInput | $Enums.Plan | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     cartItems?: CartItemUpdateManyWithoutUserNestedInput
     subscriptions?: SubscriptionUpdateManyWithoutUserNestedInput
-    adressess?: AddressUpdateManyWithoutUserNestedInput
+    addresses?: AddressUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutOrdersInput = {
@@ -15520,10 +15645,12 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
+    stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    plan?: NullableEnumPlanFieldUpdateOperationsInput | $Enums.Plan | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     cartItems?: CartItemUncheckedUpdateManyWithoutUserNestedInput
     subscriptions?: SubscriptionUncheckedUpdateManyWithoutUserNestedInput
-    adressess?: AddressUncheckedUpdateManyWithoutUserNestedInput
+    addresses?: AddressUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type AddressUpsertWithoutOrdersInput = {
@@ -15548,7 +15675,7 @@ export namespace Prisma {
     isDefault?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    user?: UserUpdateOneRequiredWithoutAdressessNestedInput
+    user?: UserUpdateOneRequiredWithoutAddressesNestedInput
   }
 
   export type AddressUncheckedUpdateWithoutOrdersInput = {

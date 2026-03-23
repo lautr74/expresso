@@ -158,6 +158,8 @@ exports.Prisma.UserScalarFieldEnum = {
   email: 'email',
   password: 'password',
   name: 'name',
+  stripeCustomerId: 'stripeCustomerId',
+  plan: 'plan',
   createdAt: 'createdAt'
 };
 
@@ -234,8 +236,7 @@ exports.Process = exports.$Enums.Process = {
 
 exports.Plan = exports.$Enums.Plan = {
   MENSUAL: 'MENSUAL',
-  TRIMESTRAL: 'TRIMESTRAL',
-  SEMESTRAL: 'SEMESTRAL'
+  TRIMESTRAL: 'TRIMESTRAL'
 };
 
 exports.OrderStatus = exports.$Enums.OrderStatus = {

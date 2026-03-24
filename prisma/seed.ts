@@ -56,7 +56,10 @@ async function main() {
       roastLevel: Roast.LIGHT,
       process: Process.WASHED,
       variants: {
-        create: [{ weight: 250, price: 16.8, stock: 30 }],
+        create: [
+          { weight: 250, price: 16.8, stock: 30 },
+          { weight: 250, price: 14.5, stock: 45 },
+        ],
       },
     },
     {
@@ -80,7 +83,10 @@ async function main() {
       roastLevel: Roast.MEDIUM,
       process: Process.HONEY,
       variants: {
-        create: [{ weight: 250, price: 15.2, stock: 50 }],
+        create: [
+          { weight: 250, price: 15.2, stock: 50 },
+          { weight: 250, price: 14.5, stock: 45 },
+        ],
       },
     },
     {
@@ -92,7 +98,10 @@ async function main() {
       roastLevel: Roast.DARK,
       process: Process.WASHED,
       variants: {
-        create: [{ weight: 1000, price: 38.0, stock: 10 }],
+        create: [
+          { weight: 1000, price: 38.0, stock: 10 },
+          { weight: 250, price: 14.5, stock: 45 },
+        ],
       },
     },
     {
@@ -104,7 +113,10 @@ async function main() {
       roastLevel: Roast.LIGHT,
       process: Process.NATURAL,
       variants: {
-        create: [{ weight: 250, price: 45.0, stock: 5 }],
+        create: [
+          { weight: 250, price: 45.0, stock: 5 },
+          { weight: 250, price: 14.5, stock: 45 },
+        ],
       },
     },
     {
@@ -116,7 +128,11 @@ async function main() {
       roastLevel: Roast.MEDIUM,
       process: Process.WASHED,
       variants: {
-        create: [{ weight: 250, price: 10.9, stock: 120 }],
+        create: [
+          { weight: 250, price: 10.9, stock: 120 },
+          { weight: 500, price: 20.0, stock: 50 },
+          { weight: 250, price: 14.5, stock: 45 },
+        ],
       },
     },
     {
@@ -128,7 +144,10 @@ async function main() {
       roastLevel: Roast.MEDIUM,
       process: Process.NATURAL,
       variants: {
-        create: [{ weight: 250, price: 12.5, stock: 70 }],
+        create: [
+          { weight: 250, price: 12.5, stock: 70 },
+          { weight: 250, price: 14.5, stock: 45 },
+        ],
       },
     },
     {
@@ -140,7 +159,10 @@ async function main() {
       roastLevel: Roast.MEDIUM,
       process: Process.HONEY,
       variants: {
-        create: [{ weight: 500, price: 22.5, stock: 35 }],
+        create: [
+          { weight: 500, price: 22.5, stock: 35 },
+          { weight: 250, price: 14.5, stock: 45 },
+        ],
       },
     },
     {
@@ -152,7 +174,10 @@ async function main() {
       roastLevel: Roast.LIGHT,
       process: Process.WASHED,
       variants: {
-        create: [{ weight: 250, price: 14.1, stock: 40 }],
+        create: [
+          { weight: 250, price: 14.1, stock: 40 },
+          { weight: 250, price: 14.5, stock: 45 },
+        ],
       },
     },
     {
@@ -164,7 +189,10 @@ async function main() {
       roastLevel: Roast.MEDIUM,
       process: Process.WASHED,
       variants: {
-        create: [{ weight: 250, price: 11.8, stock: 100 }],
+        create: [
+          { weight: 250, price: 11.8, stock: 100 },
+          { weight: 250, price: 14.5, stock: 45 },
+        ],
       },
     },
     {
@@ -176,7 +204,10 @@ async function main() {
       roastLevel: Roast.DARK,
       process: Process.WASHED,
       variants: {
-        create: [{ weight: 250, price: 9.5, stock: 150 }],
+        create: [
+          { weight: 250, price: 9.5, stock: 150 },
+          { weight: 250, price: 14.5, stock: 45 },
+        ],
       },
     },
     {
@@ -188,7 +219,10 @@ async function main() {
       roastLevel: Roast.MEDIUM,
       process: Process.NATURAL,
       variants: {
-        create: [{ weight: 250, price: 15.9, stock: 25 }],
+        create: [
+          { weight: 250, price: 15.9, stock: 25 },
+          { weight: 250, price: 14.5, stock: 45 },
+        ],
       },
     },
     {
@@ -200,7 +234,10 @@ async function main() {
       roastLevel: Roast.LIGHT,
       process: Process.WASHED,
       variants: {
-        create: [{ weight: 250, price: 13.7, stock: 55 }],
+        create: [
+          { weight: 250, price: 13.7, stock: 55 },
+          { weight: 250, price: 14.5, stock: 45 },
+        ],
       },
     },
     {
@@ -212,7 +249,10 @@ async function main() {
       roastLevel: Roast.MEDIUM,
       process: Process.WASHED,
       variants: {
-        create: [{ weight: 500, price: 19.8, stock: 45 }],
+        create: [
+          { weight: 500, price: 19.8, stock: 45 },
+          { weight: 250, price: 14.5, stock: 45 },
+        ],
       },
     },
     {

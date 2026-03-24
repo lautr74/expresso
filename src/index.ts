@@ -10,14 +10,20 @@ import userRoutes from "./routes/user.routes.js";
 import { handleStripeWebhook } from "./controllers/webhook.controller.js";
 import paymentRoutes from "./routes/payment.routes.js";
 
+const allowedOrigins = [
+  "http://localhost:3000",
+  process.env.FRONTEND_URL,
+].filter(Boolean) as string[];
 const app = express();
 const PORT = process.env.PORT || 3001;
 
 //Configuración de CORS
 app.use(
   cors({
-    origin: "http://localhost:3000",
-    credentials: true,
+    origin: allowedOrigins,
+   methods: ["GET", "POST", "PUT", "DELETE"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+  credentials: true
   }),
 );
 

@@ -3,7 +3,7 @@ name: Remote Deploy
 on:
   push:
     branches:
-      - main # Asegúrate de que tu rama principal se llame así
+      - main
 
 jobs:
   deploy:

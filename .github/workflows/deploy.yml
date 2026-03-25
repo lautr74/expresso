@@ -20,7 +20,7 @@ jobs:
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
-            # 1. Cargar NVM y Node al PATH (Esto es lo que falta)
+            # 1. Cargar NVM y Node al PATH
             export NVM_DIR="$HOME/.nvm"
             [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 
@@ -33,8 +33,10 @@ jobs:
             # 3. Instalar dependencias (limpio)
             npm install
 
+            npx prisma generate
+
             # 4. Construir el proyecto (Si usas TS o Next.js)
             npm run build
 
-            # 5. Reiniciar con PM2 (Usa un nombre único para este proyecto)
+            # 5. Reiniciar con PM2
             pm2 restart "expresso" || pm2 start dist/src/index.js --name "expresso"

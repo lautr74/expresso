@@ -35,7 +35,7 @@ jobs:
 
             npx prisma generate
 
-            # 4. Construir el proyecto (Si usas TS o Next.js)
+            # 4. Construir el proyecto
             npm run build
 
             # 5. Reiniciar con PM2

@@ -30,8 +30,9 @@ app.use(
 // Stripe Webhook
 app.post(
   "/api/webhooks/stripe",
-  express.raw({ type: "application/json" }),
+  express.raw({ type: "*/*" }),
   (req, res) => {
+    console.log("📍 Ruta /api/webhooks/stripe detectada en index.ts");
     handleStripeWebhook(req, res);
   }
 );

@@ -7,6 +7,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string);
 const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET as string;
 
 export const handleStripeWebhook = async (req: Request, res: Response) => {
+    console.log("📥 Petición recibida en Webhook /api/webhooks/stripe");
 
     const sig = req.headers["stripe-signature"] as string;
     let event: Stripe.Event;
@@ -18,15 +19,16 @@ export const handleStripeWebhook = async (req: Request, res: Response) => {
         return res.status(400).send(`Webhook Error: ${err.message}`);
     }
 
-    // Respondemos 200 YA.
+    console.log(`🔔 Evento de Stripe recibido: ${event.type}`);
+
+    // Respondemos 200 YA para evitar que Stripe lo reintente infinitamente si algo falla.
     res.json({ received: true });
 
-    // 2. Ahora ejecutamos la lógica en segundo plano
     if (event.type === "payment_intent.succeeded") {
         const paymentIntent = event.data.object as Stripe.PaymentIntent;
         const { userId, addressId } = paymentIntent.metadata;
 
-        console.log("🚀 Procesando lógica para usuario:", userId);
+        console.log("💰 Pago de Stripe exitoso. Metadata:", { userId, addressId });
 
         try {
             await prisma.$transaction(async (tx) => {
@@ -39,6 +41,7 @@ export const handleStripeWebhook = async (req: Request, res: Response) => {
                     console.log("ℹ️ Carrito vacío, nada que hacer.");
                     return;
                 }
+                console.log("creando orden");
 
                 const order = await tx.order.create({
                     data: {

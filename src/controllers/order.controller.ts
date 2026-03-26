@@ -36,42 +36,19 @@ export const createOrder = async (req: AuthRequest, res: Response) => {
     }, 0);
     const amountInCents = Math.round(total * 100);
 
-    // 3. TRANSACCIÓN
-    const order = await prisma.$transaction(async (tx) => {
-      const newOrder = await tx.order.create({
-        data: {
-          userId,
-          addressId,
-          totalAmount: total,
-          status: OrderStatus.PENDING,
-          items: {
-            create: cartItems.map((item) => ({
-              productId: item.productId,
-              variantId: item.variantId,
-              quantity: item.quantity,
-              price: item.variant.price,
-            })),
-          },
-        },
-      });
-
-      return newOrder;
-    });
-
     // --- Cobrar con Stripe ---
     const paymentIntent = await stripe.paymentIntents.create({
       amount: amountInCents,
       currency: "eur",
       payment_method_types: ["card"],
       metadata: {
-        orderId: order.id,
+        addressId: addressId,
         userId: userId,
       },
     });
 
     res.status(201).json({
       clientSecret: paymentIntent.client_secret,
-      orderId: order.id,
     });
   } catch (error) {
     console.error(error);

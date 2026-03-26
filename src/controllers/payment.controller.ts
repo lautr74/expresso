@@ -21,9 +21,13 @@ export const createPaymentIntent = async (req: AuthRequest, res: Response) => {
       include: { variant: true }
     });
 
-    const totalAmount = cartItems.reduce((acc, item) =>
-      acc + (Number(item.variant.price) * item.quantity), 0
-    );
+    const totalAmount = cartItems.reduce((acc, item) => {
+      // Validar stock de cada item
+      if (item.variant.stock < item.quantity) {
+        throw new Error(`Stock insuficiente para ${item.variant.id}`);
+      }
+      return acc + (Number(item.variant.price) * item.quantity);
+    }, 0);
 
     if (totalAmount <= 0) return res.status(400).json({ error: "Carrito vacío" });
 
